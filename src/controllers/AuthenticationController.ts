@@ -1,4 +1,5 @@
 import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
+import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 import Account from 'src/entities/Account';
 import JwtAuthGuard from 'src/guards/JwtAuthGuard';
@@ -7,9 +8,11 @@ import AuthenticationService, {
 } from 'src/services/AuthenticationService';
 
 class AuthenticationRequestPayload {
+  @ApiProperty({ required: true })
   @IsNotEmpty()
   username: string;
 
+  @ApiProperty({ required: true })
   @IsNotEmpty()
   password: string;
 }

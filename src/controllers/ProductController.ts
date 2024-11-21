@@ -10,6 +10,7 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
+import { ApiProperty } from '@nestjs/swagger';
 import {
   ArrayNotEmpty,
   IsArray,
@@ -29,10 +30,12 @@ import JwtAuthGuard from 'src/guards/JwtAuthGuard';
 import ProductService from 'src/services/ProductService';
 
 class ProductPriceRequestPayload {
+  @ApiProperty({ required: true })
   @IsEnum(CurrencyCode)
   @IsNotEmpty()
   currency: CurrencyCode;
 
+  @ApiProperty({ required: true })
   @IsNumber({ maxDecimalPlaces: 2 })
   @IsNotEmpty()
   price: number;
@@ -43,18 +46,22 @@ class ProductPriceResponsePayload extends ProductPriceRequestPayload {
 }
 
 class UpdateProductRequestPayload {
+  @ApiProperty({ required: false })
   @IsEnum(Brand)
   @IsOptional()
   brand?: Brand;
 
+  @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
   reference_number?: string;
 
+  @ApiProperty({ required: false })
   @IsDateString()
   @IsOptional()
   release_date?: string;
 
+  @ApiProperty({ required: false })
   @IsEnum(CountryCode)
   @IsOptional()
   country_origin?: CountryCode;
@@ -65,26 +72,32 @@ class UpdateProductResponsePayload extends UpdateProductRequestPayload {
 }
 
 class AddProductRequestPayload {
+  @ApiProperty({ required: true })
   @IsString()
   @IsNotEmpty()
   name: string;
 
+  @ApiProperty({ required: true })
   @IsEnum(Brand)
   @IsNotEmpty()
   brand: Brand;
 
+  @ApiProperty({ required: true })
   @IsString()
   @IsNotEmpty()
   reference_number: string;
 
+  @ApiProperty({ required: true })
   @IsDateString()
   @IsNotEmpty()
   release_date: string;
 
+  @ApiProperty({ required: true })
   @IsEnum(CountryCode)
   @IsNotEmpty()
   country_origin: CountryCode;
 
+  @ApiProperty({ type: [ProductPriceRequestPayload], required: true })
   @ArrayNotEmpty()
   @IsArray()
   @IsNotEmpty()
@@ -97,22 +110,27 @@ class AddProductResponsePayload extends AddProductRequestPayload {
 }
 
 class ProductQueryPayload {
+  @ApiProperty({ required: true })
   @IsEnum(CurrencyCode)
   @IsNotEmpty()
   currency: CurrencyCode;
 
+  @ApiProperty({ required: false })
   @IsNumber()
   @IsOptional()
   page?: number;
 
+  @ApiProperty({ required: false })
   @IsNumber()
   @IsOptional()
   size?: number;
 
+  @ApiProperty({ required: false })
   @IsEnum(Brand)
   @IsOptional()
   brand?: Brand;
 
+  @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
   searchText?: string;
@@ -135,6 +153,7 @@ class ProductListResponsePayload {
 }
 
 class ProductDetailQueryPayload {
+  @ApiProperty({ required: true })
   @IsEnum(CurrencyCode)
   @IsNotEmpty()
   currency: CurrencyCode;
